@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_0" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="RegistrationEmailViewController">
+            <connections>
+                <outlet property="continueButton" destination="CoQ-v4-bLY" id="kfB-h2-GFg"/>
+                <outlet property="continueButtonBottomConstraint" destination="cxR-vJ-Xl3" id="gah-hg-R1O"/>
+                <outlet property="emailTextField" destination="lfD-Fr-d6H" id="Dax-ID-5dK"/>
+                <outlet property="view" destination="iN0-l3-epB" id="tC3-hq-EcA"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoQ-v4-bLY">
+                    <rect key="frame" x="0.0" y="519" width="320" height="49"/>
+                    <color key="backgroundColor" white="0.89286081414473684" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="49" id="SRc-lT-oQg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                    <state key="normal" title="Continue">
+                        <color key="titleColor" red="0.25428477179133385" green="0.69371448863636365" blue="0.17366281223182622" alpha="1" colorSpace="calibratedRGB"/>
+                    </state>
+                    <state key="disabled">
+                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="continueButtonTapped:" destination="-1" eventType="touchUpInside" id="tqD-tg-cwj"/>
+                    </connections>
+                </button>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="lfD-Fr-d6H">
+                    <rect key="frame" x="16" y="95" width="288" height="30"/>
+                    <nil key="textColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                    <connections>
+                        <action selector="emailTextChanged:" destination="-1" eventType="editingChanged" id="NR4-bD-zOM"/>
+                    </connections>
+                </textField>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter you email:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Isj-ZU-kij">
+                    <rect key="frame" x="16" y="74" width="150" height="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="lfD-Fr-d6H" firstAttribute="top" secondItem="Isj-ZU-kij" secondAttribute="bottom" constant="4" id="1tU-E9-eUa"/>
+                <constraint firstItem="Isj-ZU-kij" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="74" id="Erc-2H-qZJ"/>
+                <constraint firstAttribute="trailing" secondItem="CoQ-v4-bLY" secondAttribute="trailing" id="GuR-A7-3Kt"/>
+                <constraint firstAttribute="bottom" secondItem="CoQ-v4-bLY" secondAttribute="bottom" id="cxR-vJ-Xl3"/>
+                <constraint firstAttribute="trailing" secondItem="lfD-Fr-d6H" secondAttribute="trailing" constant="16" id="j2T-Zi-TQQ"/>
+                <constraint firstItem="Isj-ZU-kij" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="qOV-Sw-07g"/>
+                <constraint firstItem="CoQ-v4-bLY" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="r2x-31-LK0"/>
+                <constraint firstItem="lfD-Fr-d6H" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="16" id="zzV-Jy-cIE"/>
+            </constraints>
+            <point key="canvasLocation" x="-84" y="7"/>
+        </view>
+    </objects>
+</document>
