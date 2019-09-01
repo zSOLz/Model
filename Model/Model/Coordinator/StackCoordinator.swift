@@ -132,7 +132,7 @@ open class StackCoordinator: Coordinator, UINavigationControllerDelegate {
     
     open func clearUnusedChildCoordinators() {
         for coordinator in children {
-            if !navigationController.childViewControllers.contains(coordinator.baseViewController) &&
+            if !navigationController.children.contains(coordinator.baseViewController) &&
                 coordinator != modallyShownCoordinator {
                 coordinator.removeFromParent()
             }

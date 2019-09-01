@@ -37,11 +37,11 @@ open class ContainerViewController: UIViewController {
         }
     }
 
-    open override var childViewControllerForStatusBarStyle: UIViewController? {
+    open override var childForStatusBarStyle: UIViewController? {
         return contentViewController
     }
 
-    open override var childViewControllerForStatusBarHidden: UIViewController? {
+    open override var childForStatusBarHidden: UIViewController? {
         return contentViewController
     }
 
@@ -73,8 +73,8 @@ open class ContainerViewController: UIViewController {
                                             from: fromViewController,
                                             to: toViewController)
 
-            fromViewController?.willMove(toParentViewController: nil)
-            toViewController?.willMove(toParentViewController: self)
+            fromViewController?.willMove(toParent: nil)
+            toViewController?.willMove(toParent: self)
             if let toViewController = toViewController {
                 containerView.addSubview(toViewController.view)
             }
@@ -82,14 +82,14 @@ open class ContainerViewController: UIViewController {
             animator.animateTransition(using: context)
             DispatchQueue.main.asyncAfter(deadline: .now() + animator.transitionDuration(using: context), execute: { [weak self] in
                 if let fromViewController = fromViewController {
-                    fromViewController.removeFromParentViewController()
+                    fromViewController.removeFromParent()
                     fromViewController.view.removeFromSuperview()
-                    fromViewController.didMove(toParentViewController: nil)
+                    fromViewController.didMove(toParent: nil)
                 }
 
                 if let toViewController = toViewController {
-                    self?.addChildViewController(toViewController)
-                    toViewController.didMove(toParentViewController: self)
+                    self?.addChild(toViewController)
+                    toViewController.didMove(toParent: self)
                 }
 
                 animator.animationEnded?(true)
@@ -99,21 +99,21 @@ open class ContainerViewController: UIViewController {
             contentViewController = toViewController
 
             if let fromViewController = fromViewController {
-                fromViewController.willMove(toParentViewController: nil)
-                fromViewController.removeFromParentViewController()
+                fromViewController.willMove(toParent: nil)
+                fromViewController.removeFromParent()
                 fromViewController.view.removeFromSuperview()
-                fromViewController.didMove(toParentViewController: nil)
+                fromViewController.didMove(toParent: nil)
             }
 
             if let toViewController = toViewController {
-                toViewController.willMove(toParentViewController: self)
-                addChildViewController(toViewController)
+                toViewController.willMove(toParent: self)
+                addChild(toViewController)
 
                 containerView.addSubview(toViewController.view)
                 toViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 toViewController.view.frame = containerView.bounds
 
-                toViewController.didMove(toParentViewController: self)
+                toViewController.didMove(toParent: self)
             }
         }
         

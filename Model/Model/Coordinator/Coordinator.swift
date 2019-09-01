@@ -88,7 +88,7 @@ open class Coordinator: NSObject, Resolver {
             return
         }
         
-        guard let index = parentCoordinator.children.index(where: { $0 === self }) else {
+        guard let index = parentCoordinator.children.firstIndex(where: { $0 === self }) else {
             assertionFailure("Model.Coordinator.removeFromParent()\n" +
                 "Parent coordinator does not contain current coordinator in children list")
             self.parent = nil
@@ -108,7 +108,7 @@ open class Coordinator: NSObject, Resolver {
             return
         }
 
-        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
     }
 
     open func presentCustom(coordinator: Coordinator, presentation: () -> ()) {
@@ -264,4 +264,9 @@ open class Coordinator: NSObject, Resolver {
         let coordinator = (children.first { $0 is CoordinatorType } as? CoordinatorType)
         return coordinator
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

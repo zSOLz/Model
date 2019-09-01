@@ -11,9 +11,9 @@
       location = "group:/Users/andreisalavei/Projects/Model/Model.podspec">
    </FileRef>
    <FileRef
-      location = "group:/Users/andreisalavei/Projects/Model/ViperBase-Sample/Model-Sample.xcodeproj">
+      location = "group:Model-Sample/Model-Sample.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:/Users/andreisalavei/Projects/Model/ViperBase/Model.xcodeproj">
+      location = "group:Model/Model.xcodeproj">
    </FileRef>
 </Workspace>
