@@ -10,14 +10,14 @@
 import XCTest
 @testable import Model
 
-fileprivate class OneViewController: UIViewController { }
-fileprivate class AnotherViewController: UIViewController { }
-fileprivate class CustomTabBarController: PresentableTabBarController { }
+private class OneViewController: UIViewController { }
+private class AnotherViewController: UIViewController { }
+private class CustomTabBarController: PresentableTabBarController { }
 
-fileprivate class TabRouterSubcassMock: TabRouter {
+private class TabRouterSubcassMock: TabRouter {
     var isLoadTabBarControllerCalled = false
     
-    override fileprivate func loadTabBarController() {
+    override private func loadTabBarController() {
         isLoadTabBarControllerCalled = true
         
         super.loadTabBarController()

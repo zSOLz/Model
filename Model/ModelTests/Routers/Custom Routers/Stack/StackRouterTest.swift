@@ -9,14 +9,14 @@
 import XCTest
 @testable import Model
 
-fileprivate class OneViewController: UIViewController { }
-fileprivate class AnotherViewController: UIViewController { }
-fileprivate class CustomNavigationController: PresentableNavigationController { }
+private class OneViewController: UIViewController { }
+private class AnotherViewController: UIViewController { }
+private class CustomNavigationController: PresentableNavigationController { }
 
-fileprivate class StackRouterSubcassMock: StackRouter {
+private class StackRouterSubcassMock: StackRouter {
     var isLoadNavigationControllerCalled = false
     
-    override fileprivate func loadNavigationController() {
+    override private func loadNavigationController() {
         isLoadNavigationControllerCalled = true
         
         super.loadNavigationController()

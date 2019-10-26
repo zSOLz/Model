@@ -9,7 +9,7 @@
 import UIKit
 
 class KeyboardHeightObserver {
-    var heightChangedClosure: ((CGFloat)->Void)?
+    var heightChangedClosure: ((CGFloat) -> Void)?
     
     init() {
         NotificationCenter.default.addObserver(self,
@@ -33,7 +33,7 @@ class KeyboardHeightObserver {
     }
 }
 
-fileprivate extension KeyboardHeightObserver {
+private extension KeyboardHeightObserver {
     @objc func keyboardWillShow(_ notification: NSNotification) {
         guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {
             return

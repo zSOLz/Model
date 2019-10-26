@@ -16,7 +16,7 @@ open class ContainerViewController: UIViewController {
     private var innerContainerView: UIView?
 
     /// The view controller that is contained in this container controller
-    @IBOutlet fileprivate(set) open var contentViewController: UIViewController?
+    @IBOutlet private(set) open var contentViewController: UIViewController?
     
     /// The view that will be a superview for content view controller's view
     @IBOutlet open var containerView: UIView! {

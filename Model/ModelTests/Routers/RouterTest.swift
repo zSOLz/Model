@@ -10,7 +10,7 @@
 import XCTest
 @testable import Model
 
-fileprivate class UIViewControllerSublassMock: UIViewController {
+private class UIViewControllerSublassMock: UIViewController {
     var isPresentModalControllerCalled = false
     var isDismissModalControllerCalled = false
     
@@ -20,17 +20,17 @@ fileprivate class UIViewControllerSublassMock: UIViewController {
         super.present(viewControllerToPresent, animated: flag, completion: completion)
     }
     
-    override fileprivate func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+    override private func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
         isDismissModalControllerCalled = true
         
         super.dismiss(animated: flag, completion: completion)
     }
 }
 
-fileprivate class RouterSubclassCloseViewMock: RouterSubclassMock {
-    var closeCurrentViewClosure: ((Bool, (()->Void)?)->Void)!
+private class RouterSubclassCloseViewMock: RouterSubclassMock {
+    var closeCurrentViewClosure: ((Bool, (() -> Void)?) -> Void)!
     
-    override open func closeCurrentView(animated: Bool, completion: (()->Void)?) {
+    override open func closeCurrentView(animated: Bool, completion: (() -> Void)?) {
         closeCurrentViewClosure(animated, completion)
     }
 }
@@ -72,7 +72,7 @@ class RouterTest: XCTestCase {
     
     func testCloseCurrentViewMethod() {
         let router = RouterSubclassCloseViewMock()
-        var completionBlock: (()->Void)?
+        var completionBlock: (() -> Void)?
         var isAnimated: Bool?
         var isCloseCurrentViewCalled = false
         
@@ -90,7 +90,7 @@ class RouterTest: XCTestCase {
     
     func testCloseCurrentViewAnimatedMethod() {
         let router = RouterSubclassCloseViewMock()
-        var completionBlock: (()->Void)?
+        var completionBlock: (() -> Void)?
         var isAnimated: Bool?
         var isCloseCurrentViewCalled = false
         

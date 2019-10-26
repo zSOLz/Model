@@ -52,7 +52,7 @@ open class TabCoordinator: Coordinator {
     /// Creates the tab bar controller that the coordinator manages. You should never call this method directly.
     /// The tab bar coordinator  calls method when its tab bar controller is never beeng initialized.
     /// The default implementation of this method creates object of *PresentableTabBarController* class and assigns it to *tabBarController* property.
-    /// Override this method to assign custom navigation controller.
+    /// Override this method to assign custom tab bar controller.
     open func loadTabBarController() {
         tabBarController = UITabBarController()
     }

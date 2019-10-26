@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NewsFeedTableCell" rowHeight="328" id="xQg-uG-nEE" customClass="NewsFeedTableCell" customModule="Model_Sample" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="328"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xQg-uG-nEE" id="oYb-7E-Z5w">
+                <rect key="frame" x="0.0" y="0.0" width="320" height="328"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CYi-E6-Wb2">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="308"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                    </view>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="990" verticalHuggingPriority="990" horizontalCompressionResistancePriority="995" verticalCompressionResistancePriority="995" text="_Date" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1I-DX-pjN">
+                        <rect key="frame" x="70" y="44" width="230" height="14.5"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleCaption1"/>
+                        <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="highlightedColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n79-v4-hG2">
+                        <rect key="frame" x="20" y="20" width="40" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40" id="ZfS-vh-z9p"/>
+                            <constraint firstAttribute="width" constant="40" id="rtc-Yh-mpR"/>
+                        </constraints>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="990" verticalHuggingPriority="990" horizontalCompressionResistancePriority="995" verticalCompressionResistancePriority="995" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vou-iI-ZGY">
+                        <rect key="frame" x="70" y="20" width="230" height="24"/>
+                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle3"/>
+                        <inset key="contentEdgeInsets" minX="0.0" minY="0.0" maxX="1" maxY="0.0"/>
+                        <state key="normal" title="Button">
+                            <color key="titleColor" systemColor="linkColor" red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </state>
+                    </button>
+                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="tNL-gk-Eii">
+                        <rect key="frame" x="0.0" y="70" width="320" height="238"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oBj-Xe-h0y">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="160"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="oBj-Xe-h0y" secondAttribute="height" multiplier="2:1" id="UJJ-LP-mmW"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" horizontalHuggingPriority="800" verticalHuggingPriority="800" horizontalCompressionResistancePriority="950" verticalCompressionResistancePriority="950" scrollEnabled="NO" editable="NO" text="Lorem ipsum dolor sit er elit lamet, consectetaur cillium " textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="K1M-XT-Kkw">
+                                <rect key="frame" x="0.0" y="160" width="320" height="78"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                    </stackView>
+                </subviews>
+                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058823529413" green="0.77647058823529413" blue="0.78431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                <constraints>
+                    <constraint firstItem="oBj-Xe-h0y" firstAttribute="top" secondItem="n79-v4-hG2" secondAttribute="bottom" constant="10" id="7RF-cX-Q7w"/>
+                    <constraint firstItem="CYi-E6-Wb2" firstAttribute="top" secondItem="oYb-7E-Z5w" secondAttribute="top" id="7ko-3F-2E0"/>
+                    <constraint firstItem="Vou-iI-ZGY" firstAttribute="top" secondItem="oYb-7E-Z5w" secondAttribute="top" constant="20" id="8c9-CN-b5u"/>
+                    <constraint firstAttribute="trailing" secondItem="tNL-gk-Eii" secondAttribute="trailing" id="CtB-Fb-GVW"/>
+                    <constraint firstItem="CYi-E6-Wb2" firstAttribute="leading" secondItem="oYb-7E-Z5w" secondAttribute="leading" id="Dxi-Pl-VNk"/>
+                    <constraint firstItem="n79-v4-hG2" firstAttribute="top" secondItem="oYb-7E-Z5w" secondAttribute="top" constant="20" id="IEW-5N-40e"/>
+                    <constraint firstItem="n79-v4-hG2" firstAttribute="leading" secondItem="oYb-7E-Z5w" secondAttribute="leading" constant="20" id="TT1-K7-mPB"/>
+                    <constraint firstItem="Vou-iI-ZGY" firstAttribute="leading" secondItem="n79-v4-hG2" secondAttribute="trailing" constant="10" id="TVb-M5-VIy"/>
+                    <constraint firstItem="tNL-gk-Eii" firstAttribute="leading" secondItem="oYb-7E-Z5w" secondAttribute="leading" id="TY9-Js-fqW"/>
+                    <constraint firstAttribute="bottom" secondItem="CYi-E6-Wb2" secondAttribute="bottom" constant="20" id="b8X-ya-0xM"/>
+                    <constraint firstAttribute="trailing" secondItem="CYi-E6-Wb2" secondAttribute="trailing" id="bdg-Kd-w8f"/>
+                    <constraint firstAttribute="trailing" secondItem="Vou-iI-ZGY" secondAttribute="trailing" constant="20" id="brX-1y-HR8"/>
+                    <constraint firstAttribute="trailing" secondItem="c1I-DX-pjN" secondAttribute="trailing" constant="20" id="fqF-zk-20C"/>
+                    <constraint firstAttribute="bottom" secondItem="tNL-gk-Eii" secondAttribute="bottom" priority="990" constant="20" id="qhQ-ku-0Xg"/>
+                    <constraint firstItem="c1I-DX-pjN" firstAttribute="leading" secondItem="n79-v4-hG2" secondAttribute="trailing" constant="10" id="sbu-Re-o2q"/>
+                    <constraint firstItem="c1I-DX-pjN" firstAttribute="top" secondItem="Vou-iI-ZGY" secondAttribute="bottom" id="tqN-oC-tul"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="authorButton" destination="Vou-iI-ZGY" id="9Rf-lR-MOJ"/>
+                <outlet property="avatarImageView" destination="n79-v4-hG2" id="RAT-BS-3L3"/>
+                <outlet property="contentImageView" destination="oBj-Xe-h0y" id="O3a-gd-yef"/>
+                <outlet property="contentTextView" destination="K1M-XT-Kkw" id="WZE-rY-ks5"/>
+                <outlet property="dateLabel" destination="c1I-DX-pjN" id="AmO-tL-s8k"/>
+            </connections>
+            <point key="canvasLocation" x="81.599999999999994" y="-391.304347826087"/>
+        </tableViewCell>
+    </objects>
+</document>

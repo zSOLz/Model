@@ -9,22 +9,21 @@
 import UIKit
 
 /**
- The base class of the single module. Basically one coordinator is connected with one container controller like PresentableNavigationController, PresentableTabBarController and e.t.c.
+ The base class of the single module. Basically one coordinator is connected with one container controller like NavigationCoordinator, TabCoordinator and e.t.c.
  All navigation logic as well as screen transition control should be kept it this 'Coordinator' layer.
- Custom coordinator can interact with 'Views' and 'Presenters' layers to setup screens in proper way.
+ Custom coordinator can interact with 'Views' and 'Presentation' layers to setup screens in proper way.
  
  Custom coordinator may contain:
- - Strong references to assembly interface
  - In most cases, strong references to base container controllr
  - Strong references to it's child coordinators ('children' property)
  - Weak reference to its parent coordinator
  */
-open class Coordinator: NSObject, Resolver {
+open class Coordinator: NSObject, Continer {
     /// All child coordinators references to keep tree-like application navigation structure.
     /// Use *add(child:)* and *removeFromParent()* to modify this array.
     open private(set) lazy var children = [Coordinator]()
     
-    /// The rotuer's parent, or nil if it has none
+    /// The coordinator's parent, or nil if it has none
     open private(set) weak var parent: Coordinator?
     
     open private(set) var modallyShownCoordinator: Coordinator?
@@ -34,7 +33,7 @@ open class Coordinator: NSObject, Resolver {
         return parent
     }
     
-    public var containers: [Container] = []
+    public var containers: [ContainerItem] = []
     
     public init(parent: Coordinator? = nil) {
         super.init()
@@ -82,7 +81,8 @@ open class Coordinator: NSObject, Resolver {
         child.parent = self
     }
     
-    /// Removes a coordinator from its parent's child coordinators list
+    /// Removes the the coordinator from its parent's children coordinators array. If this method is overridden then
+    /// the super implementation must be called.
     open func removeFromParent() {
         guard let parentCoordinator = parent else {
             return
@@ -97,53 +97,6 @@ open class Coordinator: NSObject, Resolver {
         
         parentCoordinator.children.remove(at: index)
         self.parent = nil
-    }
-
-    /// Open url from application
-    /// - parameter url: url to open.
-    open func openURL(_ url: URL) {
-        guard UIApplication.shared.canOpenURL(url) else {
-            assertionFailure("Model.Coordinator.openURL()\n" +
-                "Cannot open url \(url)")
-            return
-        }
-
-        UIApplication.shared.open(url, options: convertToUIApplicationOpenExternalURLOptionsKeyDictionary([:]), completionHandler: nil)
-    }
-
-    open func presentCustom(coordinator: Coordinator, presentation: () -> ()) {
-        guard modallyShownCoordinator == nil && modallyShownController == nil else {
-            assertionFailure("Model.Coordinator.presentModal(coordinator:presentationStyle:animated:completion:)\n" +
-                "Unable to present modal coordinator. modallyShownCoordinator and modallyShownController should be nil")
-            return
-        }
-        if coordinator.modallyShownCoordinator != nil {
-            assertionFailure("Model.Coordinator.presentModal(coordinator:presentationStyle:animated:completion:)\n" +
-                "Attempt to add modally shown coordinator with has own modal coordinator")
-            return
-        }
-        add(child: coordinator)
-        modallyShownCoordinator = coordinator
-        modallyShownController = coordinator.baseViewController
-        presentation()
-    }
-
-    open func dismissCoordinatorCustom(_ customDismiss: () -> ()) {
-        if modallyShownCoordinator == nil {
-            assertionFailure("Model.Coordinator.dismissModalCoordinator(animated:completion:)\n" +
-                "Unable to dismiss modal coordinator: modallyShownCoordinator is nil")
-            return
-        }
-        guard modallyShownCoordinator?.modallyShownCoordinator == nil else {
-            assertionFailure("Model.Coordinator.dismissModalCoordinator(animated:completion:)\n" +
-                "Attempt to dismiss coordinator witch already has own modal coordinator. Dismiss it first")
-            return
-        }
-
-        customDismiss()
-        modallyShownCoordinator?.removeFromParent()
-        modallyShownCoordinator = nil
-        modallyShownController = nil
     }
     
     /// Present coordinator modally coordinator and add it to child coordinators list
@@ -264,9 +217,4 @@ open class Coordinator: NSObject, Resolver {
         let coordinator = (children.first { $0 is CoordinatorType } as? CoordinatorType)
         return coordinator
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToUIApplicationOpenExternalURLOptionsKeyDictionary(_ input: [String: Any]) -> [UIApplication.OpenExternalURLOptionsKey: Any] {
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (UIApplication.OpenExternalURLOptionsKey(rawValue: key), value)})
 }

@@ -12,19 +12,17 @@
 		2CBDDE86231BF5850087242E /* TabCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE81231BF5840087242E /* TabCoordinator.swift */; };
 		2CBDDE87231BF5850087242E /* ContainerCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE82231BF5840087242E /* ContainerCoordinator.swift */; };
 		2CBDDE88231BF5850087242E /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE83231BF5840087242E /* Coordinator.swift */; };
-		2CBDDE89231BF5850087242E /* StackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE84231BF5840087242E /* StackCoordinator.swift */; };
+		2CBDDE89231BF5850087242E /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE84231BF5840087242E /* NavigationCoordinator.swift */; };
 		2CBDDE8B231BF5AC0087242E /* Resolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE8A231BF5AB0087242E /* Resolver.swift */; };
 		2CBDDE8F231BF5E20087242E /* ContainerViewControllerTransitionContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE8D231BF5E20087242E /* ContainerViewControllerTransitionContext.swift */; };
 		2CBDDE90231BF5E20087242E /* ContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CBDDE8E231BF5E20087242E /* ContainerViewController.swift */; };
 		FF8B4D671EC49E460016504E /* TabRouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9BFD0C1EC36D9900131C61 /* TabRouterTest.swift */; };
 		FF8B4D6A1EC4AE8B0016504E /* StackRouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9BFD081EC36D9900131C61 /* StackRouterTest.swift */; };
 		FF8B4D6B1EC4B7100016504E /* ContainerRouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9BFD031EC36D9900131C61 /* ContainerRouterTest.swift */; };
-		FF8B4D731EC8365F0016504E /* CustomServicesMocks.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8B4D721EC8365F0016504E /* CustomServicesMocks.swift */; };
-		FF8B4D751EC83C040016504E /* ServiceManagerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8B4D6E1EC505A50016504E /* ServiceManagerTest.swift */; };
+		FF8B4D751EC83C040016504E /* ResolverTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF8B4D6E1EC505A50016504E /* ResolverTest.swift */; };
 		FF919D641EB353EA0003A85C /* Model.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF919D5A1EB353EA0003A85C /* Model.framework */; };
 		FF919D6B1EB353EA0003A85C /* ViperBase.h in Headers */ = {isa = PBXBuildFile; fileRef = FF919D5D1EB353EA0003A85C /* ViperBase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		FF919D9B1EB393040003A85C /* Interactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF919D9A1EB393040003A85C /* Interactor.swift */; };
-		FF919D9E1EB399150003A85C /* InteractorInterface.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF919D9D1EB399150003A85C /* InteractorInterface.swift */; };
 		FF9BFD1D1EC374A900131C61 /* RouterTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF9BFD0E1EC36D9900131C61 /* RouterTest.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,19 +42,17 @@
 		2CBDDE81231BF5840087242E /* TabCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabCoordinator.swift; sourceTree = "<group>"; };
 		2CBDDE82231BF5840087242E /* ContainerCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerCoordinator.swift; sourceTree = "<group>"; };
 		2CBDDE83231BF5840087242E /* Coordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
-		2CBDDE84231BF5840087242E /* StackCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackCoordinator.swift; sourceTree = "<group>"; };
+		2CBDDE84231BF5840087242E /* NavigationCoordinator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinator.swift; sourceTree = "<group>"; };
 		2CBDDE8A231BF5AB0087242E /* Resolver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Resolver.swift; sourceTree = "<group>"; };
 		2CBDDE8D231BF5E20087242E /* ContainerViewControllerTransitionContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewControllerTransitionContext.swift; sourceTree = "<group>"; };
 		2CBDDE8E231BF5E20087242E /* ContainerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerViewController.swift; sourceTree = "<group>"; };
-		FF8B4D6E1EC505A50016504E /* ServiceManagerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServiceManagerTest.swift; sourceTree = "<group>"; };
-		FF8B4D721EC8365F0016504E /* CustomServicesMocks.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomServicesMocks.swift; sourceTree = "<group>"; };
+		FF8B4D6E1EC505A50016504E /* ResolverTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResolverTest.swift; sourceTree = "<group>"; };
 		FF919D5A1EB353EA0003A85C /* Model.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Model.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF919D5D1EB353EA0003A85C /* ViperBase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViperBase.h; sourceTree = "<group>"; };
 		FF919D5E1EB353EA0003A85C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF919D631EB353EA0003A85C /* ModelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ModelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF919D6A1EB353EA0003A85C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF919D9A1EB393040003A85C /* Interactor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Interactor.swift; sourceTree = "<group>"; };
-		FF919D9D1EB399150003A85C /* InteractorInterface.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InteractorInterface.swift; sourceTree = "<group>"; };
 		FF9BFD031EC36D9900131C61 /* ContainerRouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContainerRouterTest.swift; sourceTree = "<group>"; };
 		FF9BFD081EC36D9900131C61 /* StackRouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StackRouterTest.swift; sourceTree = "<group>"; };
 		FF9BFD0C1EC36D9900131C61 /* TabRouterTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabRouterTest.swift; sourceTree = "<group>"; };
@@ -87,9 +83,9 @@
 		2CBDDE7F231BF5840087242E /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
-				2CBDDE82231BF5840087242E /* ContainerCoordinator.swift */,
 				2CBDDE83231BF5840087242E /* Coordinator.swift */,
-				2CBDDE84231BF5840087242E /* StackCoordinator.swift */,
+				2CBDDE82231BF5840087242E /* ContainerCoordinator.swift */,
+				2CBDDE84231BF5840087242E /* NavigationCoordinator.swift */,
 				2CBDDE81231BF5840087242E /* TabCoordinator.swift */,
 			);
 			path = Coordinator;
@@ -116,8 +112,7 @@
 		FF8B4D6C1EC505A50016504E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				FF8B4D721EC8365F0016504E /* CustomServicesMocks.swift */,
-				FF8B4D6E1EC505A50016504E /* ServiceManagerTest.swift */,
+				FF8B4D6E1EC505A50016504E /* ResolverTest.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -167,7 +162,6 @@
 			isa = PBXGroup;
 			children = (
 				FF919D9A1EB393040003A85C /* Interactor.swift */,
-				FF919D9D1EB399150003A85C /* InteractorInterface.swift */,
 			);
 			path = Interactor;
 			sourceTree = "<group>";
@@ -340,11 +334,10 @@
 				2CBDDE8B231BF5AC0087242E /* Resolver.swift in Sources */,
 				2CBDDE86231BF5850087242E /* TabCoordinator.swift in Sources */,
 				2CBDDE87231BF5850087242E /* ContainerCoordinator.swift in Sources */,
-				FF919D9E1EB399150003A85C /* InteractorInterface.swift in Sources */,
 				2CBDDE88231BF5850087242E /* Coordinator.swift in Sources */,
 				FF919D9B1EB393040003A85C /* Interactor.swift in Sources */,
 				2CBDDE90231BF5E20087242E /* ContainerViewController.swift in Sources */,
-				2CBDDE89231BF5850087242E /* StackCoordinator.swift in Sources */,
+				2CBDDE89231BF5850087242E /* NavigationCoordinator.swift in Sources */,
 				2CBDDE8F231BF5E20087242E /* ContainerViewControllerTransitionContext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,12 +346,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FF8B4D731EC8365F0016504E /* CustomServicesMocks.swift in Sources */,
 				FF9BFD1D1EC374A900131C61 /* RouterTest.swift in Sources */,
 				FF8B4D6B1EC4B7100016504E /* ContainerRouterTest.swift in Sources */,
 				FF8B4D671EC49E460016504E /* TabRouterTest.swift in Sources */,
 				FF8B4D6A1EC4AE8B0016504E /* StackRouterTest.swift in Sources */,
-				FF8B4D751EC83C040016504E /* ServiceManagerTest.swift in Sources */,
+				FF8B4D751EC83C040016504E /* ResolverTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

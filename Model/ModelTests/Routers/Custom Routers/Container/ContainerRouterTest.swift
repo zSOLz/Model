@@ -9,14 +9,14 @@
 import XCTest
 @testable import Model
 
-fileprivate class OneViewController: UIViewController { }
-fileprivate class AnotherViewController: UIViewController { }
-fileprivate class CustomContainerViewController: ContainerViewController { }
+private class OneViewController: UIViewController { }
+private class AnotherViewController: UIViewController { }
+private class CustomContainerViewController: ContainerViewController { }
 
-fileprivate class ContainerRouterSubcassMock: ContainerRouter {
+private class ContainerRouterSubcassMock: ContainerRouter {
     var isLoadContainerViewControllerCalled = false
     
-    override fileprivate func loadContainerViewController() {
+    override private func loadContainerViewController() {
         isLoadContainerViewControllerCalled = true
         
         super.loadContainerViewController()

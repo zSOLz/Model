@@ -17,6 +17,8 @@ import UIKit
  - Data sessions - objects that hold mutable application state
  - Other interactors (if it is really nesessary)
  */
-open class Interactor: InteractorInterface {
-    // Empty
+open class Interactor {
+    public init() {
+        // Do nothing. Empty constructor required
+    }
 }
