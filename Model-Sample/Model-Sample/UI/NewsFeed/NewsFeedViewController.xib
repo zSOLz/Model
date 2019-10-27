@@ -18,13 +18,54 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="bDF-5O-75o">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="bDF-5O-75o">
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="9wU-Fy-DY3">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X9r-bV-MaM">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="708-m4-o6C">
+                                        <rect key="frame" x="337" y="0.0" width="57" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <state key="normal" title="📷/🌄"/>
+                                        <connections>
+                                            <action selector="didTapAddPhoto:" destination="-1" eventType="touchUpInside" id="zgf-gE-Bn0"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="248" horizontalCompressionResistancePriority="754" verticalCompressionResistancePriority="755" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DKa-fy-YSq">
+                                        <rect key="frame" x="20" y="0.0" width="317" height="44"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <state key="normal" title="Say something">
+                                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapNewPost:" destination="-1" eventType="touchUpInside" id="jDR-3R-S6P"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="DKa-fy-YSq" firstAttribute="top" secondItem="X9r-bV-MaM" secondAttribute="top" id="N9m-SN-Hfa"/>
+                                    <constraint firstAttribute="height" constant="44" id="Sfc-oy-FSa"/>
+                                    <constraint firstItem="DKa-fy-YSq" firstAttribute="leading" secondItem="X9r-bV-MaM" secondAttribute="leading" constant="20" id="X5v-Hs-nCS"/>
+                                    <constraint firstItem="708-m4-o6C" firstAttribute="top" secondItem="X9r-bV-MaM" secondAttribute="top" id="aLd-Mx-wMp"/>
+                                    <constraint firstAttribute="bottom" secondItem="708-m4-o6C" secondAttribute="bottom" id="mjs-9w-y6d"/>
+                                    <constraint firstAttribute="bottom" secondItem="DKa-fy-YSq" secondAttribute="bottom" id="pCa-SO-tby"/>
+                                    <constraint firstItem="708-m4-o6C" firstAttribute="leading" secondItem="DKa-fy-YSq" secondAttribute="trailing" id="tsT-R5-SA2"/>
+                                    <constraint firstAttribute="trailing" secondItem="708-m4-o6C" secondAttribute="trailing" constant="20" id="z65-UF-vth"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="X9r-bV-MaM" secondAttribute="trailing" id="3RB-ZP-ewE"/>
+                            <constraint firstItem="X9r-bV-MaM" firstAttribute="leading" secondItem="9wU-Fy-DY3" secondAttribute="leading" id="aog-jn-p3D"/>
+                            <constraint firstItem="X9r-bV-MaM" firstAttribute="top" secondItem="9wU-Fy-DY3" secondAttribute="top" id="v4K-rd-ofk"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="JdP-0x-5Yk"/>
@@ -39,7 +80,7 @@
                 <constraint firstAttribute="trailing" secondItem="bDF-5O-75o" secondAttribute="trailing" id="fJk-9T-OMZ"/>
                 <constraint firstAttribute="bottom" secondItem="bDF-5O-75o" secondAttribute="bottom" id="fe2-z8-Ttl"/>
             </constraints>
-            <point key="canvasLocation" x="80.625" y="31.690140845070424"/>
+            <point key="canvasLocation" x="79.710144927536234" y="31.473214285714285"/>
         </view>
     </objects>
 </document>

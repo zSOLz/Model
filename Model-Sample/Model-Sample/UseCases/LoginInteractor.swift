@@ -16,7 +16,7 @@ class LoginInteractor: Interactor {
     }
     
     func isValidPassword(_ password: String) -> Bool {
-        return true
+        return password.count >= 8
     }
     
     func isValidEmail(_ email: String) -> Bool {

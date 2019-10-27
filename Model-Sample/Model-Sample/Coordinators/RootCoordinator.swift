@@ -17,6 +17,7 @@ class RootCoordinator: ContainerCoordinator {
     }
 }
 
+// MARK: - Private
 private extension RootCoordinator {
     func showAuthentication() {
         let authenticationCoordinator = AuthenticationAssembly.makeAuthenticationCoordinator(parent: self)

@@ -8,8 +8,26 @@
 
 import Model
 
-class MoreCoordinator: Coordinator {
+class MoreCoordinator: BaseSocialCoordinator {
+    var logoutClosure: () -> Void = {}
+    
     init(parent: Coordinator) {
         super.init(parent: parent)
+        
+        showMoreViewController()
+    }
+}
+
+// MARK: - Private
+private extension MoreCoordinator {
+    func showMoreViewController() {
+        let moreViewController = ProfileAssembly.makeMoreViewController(resolver: self)
+        moreViewController.openProfileClosure = { [weak self] profileId in
+            self?.openProfileScreen(with: profileId)
+        }
+        moreViewController.logoutClosure = { [weak self] in
+            self?.logoutClosure()
+        }
+        pushViewController(moreViewController)
     }
 }

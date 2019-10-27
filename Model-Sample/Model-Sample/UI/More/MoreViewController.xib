@@ -10,6 +10,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MoreViewController" customModule="Model_Sample" customModuleProvider="target">
             <connections>
+                <outlet property="avatarImageView" destination="xOu-rT-cFM" id="i1s-zv-MbN"/>
+                <outlet property="nameLabel" destination="Hdk-2G-5Sz" id="Oqb-4o-kIS"/>
+                <outlet property="tableView" destination="Qks-qB-NCi" id="Q8S-nb-Lbq"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -22,10 +25,36 @@
                     <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                     <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                     <view key="tableHeaderView" contentMode="scaleToFill" id="zKM-Ur-yQU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="121"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="90"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xOu-rT-cFM">
+                                <rect key="frame" x="20" y="20" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="F3N-B9-0vB"/>
+                                    <constraint firstAttribute="height" constant="50" id="Q55-Sw-aKM"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hdk-2G-5Sz">
+                                <rect key="frame" x="90" y="0.0" width="324" height="90"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="Hdk-2G-5Sz" secondAttribute="bottom" id="BcQ-Ff-jCb"/>
+                            <constraint firstItem="Hdk-2G-5Sz" firstAttribute="top" secondItem="zKM-Ur-yQU" secondAttribute="top" id="EVe-4C-SwH"/>
+                            <constraint firstItem="xOu-rT-cFM" firstAttribute="top" secondItem="zKM-Ur-yQU" secondAttribute="top" constant="20" id="Peq-4I-I74"/>
+                            <constraint firstAttribute="trailing" secondItem="Hdk-2G-5Sz" secondAttribute="trailing" id="UWo-ld-sLY"/>
+                            <constraint firstItem="xOu-rT-cFM" firstAttribute="leading" secondItem="zKM-Ur-yQU" secondAttribute="leading" constant="20" id="mc7-8a-9ix"/>
+                            <constraint firstItem="Hdk-2G-5Sz" firstAttribute="leading" secondItem="xOu-rT-cFM" secondAttribute="trailing" constant="20" id="odo-b0-RGj"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="wEt-TQ-G20"/>
+                        <outlet property="delegate" destination="-1" id="F1t-p0-8lc"/>
+                    </connections>
                 </tableView>
             </subviews>
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

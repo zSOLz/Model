@@ -7,6 +7,7 @@
 //
 
 import Model
+import UIKit
 
 class NewsFeedAssembly: Assembly {
     static func makeNewsFeedCoordinator(parent: Coordinator) -> NewsFeedCoordinator {
@@ -26,6 +27,19 @@ class NewsFeedAssembly: Assembly {
     static func makeNewsFeedViewController(resolver: Resolver) -> NewsFeedViewController {
         return NewsFeedViewController(newsFeedInteractor: makeNewsFeedInteractor(resolver: resolver),
                                       usersInteractor: ProfileAssembly.makeUsersInteractor(resolver: resolver))
+    }
+    
+    static func makeFeedItemDetailsViewController(feedItemId: NewsFeedItem.Id, resolver: Resolver) -> FeedItemDetailsViewController {
+        return FeedItemDetailsViewController(feedItemId: feedItemId,
+                                             usersInteractor: ProfileAssembly.makeUsersInteractor(resolver: resolver),
+                                             newsFeedInteractor: makeNewsFeedInteractor(resolver: resolver))
+    }
+    
+    static func makeNewPostViewController(resolver: Resolver) -> (NewPostViewController, UINavigationController) {
+        let newsFeedInteractor = makeNewsFeedInteractor(resolver: resolver)
+        let newPostViewController = NewPostViewController(newsFeedInteractor: newsFeedInteractor)
+        let navigationController = UINavigationController(rootViewController: newPostViewController)
+        return (newPostViewController, navigationController)
     }
 }
 

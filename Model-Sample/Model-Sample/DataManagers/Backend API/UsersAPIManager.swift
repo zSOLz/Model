@@ -18,7 +18,7 @@ final class UsersAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "friends", completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.friends(token: self.token))
         }
     }
@@ -27,7 +27,7 @@ final class UsersAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "friends", completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.friends(token: self.token, profileId: profileId))
         }
     }
@@ -36,7 +36,7 @@ final class UsersAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "userProfile", completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.profile(withId: profileId))
         }
     }
@@ -45,7 +45,7 @@ final class UsersAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "addFriend", completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.addFriend(token: self.token, profileId: profileId))
         }
     }
@@ -54,7 +54,7 @@ final class UsersAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "removeFriend", completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.removeFriend(token: self.token, profileId: profileId))
         }
     }

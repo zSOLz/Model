@@ -10,7 +10,7 @@ import UIKit
 
 extension UIView {
     func roundCornersWithMaximumRadius() {
-        layer.cornerRadius = min(frame.width, frame.height)
+        layer.cornerRadius = min(frame.width, frame.height) / 2
         layer.masksToBounds = true
     }
 }

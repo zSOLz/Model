@@ -17,14 +17,17 @@ struct FriendViewModel {
 }
 
 class FriendsViewController: ViewController {
+    private let profileId: UserProfile.Id?
     private let friendsInteractor: FriendsInteractor
     private var viewModels = [FriendViewModel]()
     
     @IBOutlet var tableView: UITableView!
     
-    var openProfile: (UserProfile.Id) -> Void = { _ in }
+    var openProfileClosure: (UserProfile.Id) -> Void = { _ in }
     
-    init(friendsInteractor: FriendsInteractor) {
+    init(profileId: UserProfile.Id?,
+         friendsInteractor: FriendsInteractor) {
+        self.profileId = profileId
         self.friendsInteractor = friendsInteractor
         
         super.init(nibName: nil, bundle: nil)
@@ -34,17 +37,23 @@ class FriendsViewController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func setupContent() {
+        super.setupContent()
+        
+        title = "Friends"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         reloadFriends()
     }
 }
 
-// MARK: - private
+// MARK: - Private
 private extension FriendsViewController {
     func reloadFriends() {
-        friendsInteractor.myFriends(completion: { [weak self] friendsResult in
+        let completionClosure: (Result<[UserProfile], Error>) -> Void = { [weak self] friendsResult in
             guard let self = self else { return }
             friendsResult.on(success: { friends in
                 self.viewModels = friends.map {
@@ -54,7 +63,13 @@ private extension FriendsViewController {
                 }.sorted(by: { $0.name < $1.name })
                 self.tableView.reloadData()
             }, failure: self.errorClosure)
-        })
+        }
+        
+        if let profileId = profileId {
+            friendsInteractor.friends(forProfileId: profileId, completion: completionClosure)
+        } else {
+            friendsInteractor.myFriends(completion: completionClosure)
+        }
     }
 }
 
@@ -73,13 +88,13 @@ extension FriendsViewController: UITableViewDataSource, UITableViewDelegate {
             cell.accessoryType = .disclosureIndicator
         }
         let viewModel = viewModels[indexPath.row]
-        cell.imageView?.image = UIImage(contentsOfFile: viewModel.avatarURL?.absoluteString ?? "")
+        cell.imageView?.image = UIImage(contentsOfFile: viewModel.avatarURL?.path ?? "")
         cell.textLabel?.text = viewModel.name
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        openProfile(viewModels[indexPath.row].profileId)
+        openProfileClosure(viewModels[indexPath.row].profileId)
     }
 }

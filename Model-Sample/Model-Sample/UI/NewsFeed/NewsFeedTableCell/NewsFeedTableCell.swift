@@ -10,6 +10,7 @@ import UIKit
 
 struct NewsFeedItemViewModel {
     let itemId: NewsFeedItem.Id
+    let authorId: UserProfile.Id
     let authorAvatarURL: URL?
     let authorName: String
     let date: String
@@ -23,15 +24,17 @@ final class NewsFeedTableCell: UITableViewCell {
     @IBOutlet var contentTextView: UITextView!
     @IBOutlet var authorButton: UIButton!
     @IBOutlet var dateLabel: UILabel!
+    
+    var tapUserNameClosure: () -> Void = {}
 
     func setup(viewModel: NewsFeedItemViewModel) {
         if let url = viewModel.authorAvatarURL {
-            avatarImageView.image = UIImage(contentsOfFile: url.absoluteString)
+            avatarImageView.image = UIImage(contentsOfFile: url.path)
         } else {
             avatarImageView.image = nil
         }
         if let contentImageURL = viewModel.imageURL {
-            contentImageView.image = UIImage(contentsOfFile: contentImageURL.absoluteString)
+            contentImageView.image = UIImage(contentsOfFile: contentImageURL.path)
             contentImageView.isHidden = false
         } else {
             contentImageView.isHidden = true
@@ -45,5 +48,9 @@ final class NewsFeedTableCell: UITableViewCell {
         authorButton.setTitle(viewModel.authorName, for: .normal)
         dateLabel.text = viewModel.date
         avatarImageView.roundCornersWithMaximumRadius()
+    }
+    
+    @IBAction func didTapUserName(_ sender: Any) {
+        tapUserNameClosure()
     }
 }

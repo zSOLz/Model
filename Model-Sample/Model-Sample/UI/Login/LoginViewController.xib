@@ -32,7 +32,7 @@
                     </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="900" verticalHuggingPriority="900" horizontalCompressionResistancePriority="950" verticalCompressionResistancePriority="950" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DaF-g1-PSb">
-                    <rect key="frame" x="0.0" y="832" width="414" height="30"/>
+                    <rect key="frame" x="0.0" y="812" width="414" height="30"/>
                     <state key="normal" title="Register new user"/>
                     <connections>
                         <action selector="didTapRegister:" destination="-1" eventType="touchUpInside" id="I8W-Iw-j0d"/>
@@ -47,7 +47,7 @@
                             <color key="textColor" systemColor="secondaryLabelColor" red="0.23529411764705882" green="0.23529411764705882" blue="0.2627450980392157" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="john@mail.com" placeholder="Type here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yEM-aj-Mhj">
+                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="adam@mail.com" placeholder="Type here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yEM-aj-Mhj">
                             <rect key="frame" x="0.0" y="29" width="320" height="27"/>
                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
                             <textInputTraits key="textInputTraits"/>
@@ -103,7 +103,7 @@
             <constraints>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="I6V-Nf-768" secondAttribute="trailing" id="EJp-fz-ycN"/>
                 <constraint firstItem="I6V-Nf-768" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="EXW-aE-qiS"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="DaF-g1-PSb" secondAttribute="bottom" priority="500" id="HBn-Ui-7zt"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="DaF-g1-PSb" secondAttribute="bottom" priority="500" constant="20" id="HBn-Ui-7zt"/>
                 <constraint firstItem="I6V-Nf-768" firstAttribute="top" secondItem="bAf-eJ-svI" secondAttribute="bottom" constant="20" id="Ifo-dO-vYd"/>
                 <constraint firstItem="bAf-eJ-svI" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="Jjx-WS-LW9"/>
                 <constraint firstItem="DaF-g1-PSb" firstAttribute="top" relation="greaterThanOrEqual" secondItem="I6V-Nf-768" secondAttribute="bottom" constant="20" id="KQP-Fg-8GU"/>

@@ -33,6 +33,7 @@ class KeyboardHeightObserver {
     }
 }
 
+// MARK: - Private
 private extension KeyboardHeightObserver {
     @objc func keyboardWillShow(_ notification: NSNotification) {
         guard let frame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect else {

@@ -38,9 +38,10 @@ class Backend {
         guard let profile = users.first(where: { $0.email == email }) else {
             return .failure(GenericError.userNotFound)
         }
+        // Do not check password - This is just a demo
         
-        let token = tokens[profile.id] ?? UUID().uuidString
-        tokens[profile.id] = token
+        let token = UUID().uuidString
+        tokens[token] = profile.id
         
         return .success(UserAuthData(profile: profile, token: token))
     }
@@ -55,10 +56,10 @@ class Backend {
     }
     
     static func friends(token: String, profileId: UserProfile.Id) -> Result<[UserProfile], Error> {
-        guard let userId = tokens[token] else {
+        guard let _ = tokens[token] else {
             return .failure(GenericError.notAuthorized)
         }
-        let friendsIds = Array(friends[userId] ?? [])
+        let friendsIds = Array(friends[profileId] ?? [])
         let userFriends = users.filter { friendsIds.contains($0.id) }
         return .success(userFriends)
     }
@@ -68,7 +69,8 @@ class Backend {
             return .failure(GenericError.notAuthorized)
         }
         
-        let friendsIds = friends[userId] ?? []
+        var friendsIds = friends[userId] ?? []
+        friendsIds.insert(userId)
         let newsFeed = feedItems.filter { friendsIds.contains($0.authorId) }
         return .success(newsFeed)
     }
@@ -83,7 +85,7 @@ class Backend {
     }
     
     static func addItem(token: String, text: String?, image: UIImage?) -> Result<NewsFeedItem, Error> {
-        guard text != nil || image == nil else {
+        guard text != nil || image != nil else {
             return .failure(GenericError.invalidParameters)
         }
         guard let userId = tokens[token] else {

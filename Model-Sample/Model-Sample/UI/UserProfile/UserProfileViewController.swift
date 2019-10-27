@@ -46,11 +46,10 @@ class UserProfileViewController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        reloadProfile()
-        reloadNewsFeed()
+        reloadProfileAndFeed()
         reloadFriends()
     }
     
@@ -58,56 +57,51 @@ class UserProfileViewController: ViewController {
         super.setupContent()
         
         avatarImageView.roundCornersWithMaximumRadius()
+        
+        tableView.register(UINib(nibName: NewsFeedTableCell.identifier, bundle: nil),
+                           forCellReuseIdentifier: NewsFeedTableCell.identifier)
     }
 }
 
-// MARK: - private
+// MARK: - Private
 private extension UserProfileViewController {
     func reloadFriends() {
         friendsInteractor.friends(forProfileId: profileId, completion: { [weak self] result in
-            guard let self = self else { return }
             result.map { $0.count }.on(success: { count in
-                self.numberOfFriendsViewModel = count
-                self.tableView.reloadSections([friendsSectionIndex], with: .none)
-            }, failure: self.errorClosure)
-        })
-    }
-    
-    func reloadProfile() {
-        usersInteractor.userProfile(withId: profileId, completion: { [weak self] result in
-            guard let self = self else { return }
-            result.on(success: { profile in
-                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.absoluteString ?? "")
-                self.emailLabel.text = profile.email
-                self.nameLabel.text = profile.username
-            }, failure: self.errorClosure)
-        })
-    }
-
-    func reloadNewsFeed() {
-        newsFeedInteractor.myNewsFeed(completion: { [weak self] newsFeedResult in
-            newsFeedResult.on(success: { feedItems in
-                let authorIds = Array(Set(feedItems.map { $0.authorId })) // Get unique user ids
-                self?.usersInteractor.userProfiles(withId: authorIds, completion: { [weak self] usersResult in
-                    usersResult.on(success: { profiles in
-                        self?.reloadNewsFeed(feedItems: feedItems, profiles: profiles)
-                    }, failure: self?.errorClosure)
-                })
+                self?.numberOfFriendsViewModel = count
+                self?.tableView.reloadData()
             }, failure: self?.errorClosure)
         })
     }
     
-    func reloadNewsFeed(feedItems: [NewsFeedItem], profiles: [UserProfile]) {
-        let mappedProfiles = profiles.reduce(into: [UserProfile.Id: UserProfile](), { $0[$1.id] = $1 })
+    func reloadProfileAndFeed() {
+        usersInteractor.userProfile(withId: profileId, completion: { [weak self] result in
+            guard let self = self else { return }
+            result.on(success: { profile in
+                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.path ?? "")
+                self.emailLabel.text = profile.email
+                self.nameLabel.text = profile.username
+                
+                self.newsFeedInteractor.feed(profileId: self.profileId, completion: { [weak self] newsFeedResult in
+                    newsFeedResult.on(success: { feedItems in
+                        self?.reloadNewsFeed(feedItems: feedItems, profile: profile)
+                    }, failure: self?.errorClosure)
+                })
+            }, failure: self.errorClosure)
+        })
+    }
+
+    func reloadNewsFeed(feedItems: [NewsFeedItem], profile: UserProfile) {
         let feedViewModels: [NewsFeedItemViewModel] = feedItems.compactMap { feedItem in
-            guard let profile = mappedProfiles[feedItem.authorId] else {
+            guard feedItem.authorId == profileId else {
                 assertionFailure("Unable to find author with id: \(feedItem.authorId)")
                 return nil
             }
             return NewsFeedItemViewModel(itemId: feedItem.id,
+                                         authorId: profileId,
                                          authorAvatarURL: profile.avatarURL,
                                          authorName: profile.username,
-                                         date: DateFormatter().string(from: feedItem.date),
+                                         date: DateFormatter.common.string(from: feedItem.date),
                                          text: feedItem.text,
                                          imageURL: feedItem.imageURL)
         }

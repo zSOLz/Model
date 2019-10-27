@@ -7,6 +7,7 @@
 //
 
 import Model
+import UIKit
 
 final class NewsFeedInteractor: Interactor {
     private let newsFeedCache: NewsFeedCache
@@ -51,5 +52,12 @@ final class NewsFeedInteractor: Interactor {
             result.onSuccess { self?.newsFeedCache.feedItems[$0.id] = $0 }
             completion(result)
         }
+    }
+    
+    func addItem(text: String?, image: UIImage?, completion: @escaping (Result<NewsFeedItem, Error>) -> Void) {
+        feedAPIManager.addItem(text: text, image: image, completion: { [weak self] result in
+            result.onSuccess { self?.newsFeedCache.feedItems[$0.id] = $0 }
+            completion(result)
+        })
     }
 }

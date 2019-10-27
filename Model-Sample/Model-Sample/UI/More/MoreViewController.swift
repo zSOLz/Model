@@ -33,26 +33,27 @@ class MoreViewController: ViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func viewDidAppear(_ animated: Bool) {
+    override func setupContent() {
+        super.setupContent()
+        
+        title = "Friends"
+        avatarImageView.roundCornersWithMaximumRadius()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         reloadProfile()
     }
-    
-    override func setupContent() {
-        super.setupContent()
-        
-        avatarImageView.roundCornersWithMaximumRadius()
-    }
 }
 
-// MARK: - private
+// MARK: - Private
 private extension MoreViewController {
     func reloadProfile() {
         usersInteractor.myProfile(completion: { [weak self] result in
             guard let self = self else { return }
             result.on(success: { profile in
-                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.absoluteString ?? "")
+                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.path ?? "")
                 self.nameLabel.text = profile.username
             }, failure: self.errorClosure)
         })

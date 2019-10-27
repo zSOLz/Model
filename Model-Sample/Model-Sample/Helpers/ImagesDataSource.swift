@@ -23,7 +23,7 @@ class ImagesDataSource {
         let fileUrl = durectoryURL.appendingPathComponent(name ?? UUID().uuidString)
         do {
             try imageData.write(to: fileUrl)
-            return URL(fileURLWithPath: fileUrl.absoluteString)
+            return fileUrl
         } catch {
             assertionFailure("Unable to save image to \(fileUrl)")
             return nil
@@ -39,6 +39,7 @@ class ImagesDataSource {
     }
 }
 
+// MARK: - Private
 private extension ImagesDataSource {
     static var documentsDirectoryURL: URL? {
         return FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first

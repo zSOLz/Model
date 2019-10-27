@@ -94,6 +94,7 @@ public extension Continer {
     }
 }
 
+// MARK: - Private
 private extension Continer {
     func index<ContentType>(of _: ContentType.Type, keypath: AnyHashable?) -> Int? {
         return containers.firstIndex(where: { $0.content is ContentType && $0.identifier == keypath })

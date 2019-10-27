@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina5_9" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FeedItemDetailsViewController" customModule="Model_Sample" customModuleProvider="target">
+            <connections>
+                <outlet property="tableView" destination="AgP-Zw-201" id="1AO-aW-xGb"/>
+                <outlet property="view" destination="nD1-hJ-47u" id="1kI-jZ-m4d"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="nD1-hJ-47u">
+            <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" translatesAutoresizingMaskIntoConstraints="NO" id="AgP-Zw-201">
+                    <rect key="frame" x="0.0" y="0.0" width="375" height="812"/>
+                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="74R-Lk-PCM"/>
+                        <outlet property="delegate" destination="-1" id="HDE-1Q-DhF"/>
+                    </connections>
+                </tableView>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="AgP-Zw-201" secondAttribute="bottom" id="2r6-zS-4YR"/>
+                <constraint firstItem="AgP-Zw-201" firstAttribute="top" secondItem="nD1-hJ-47u" secondAttribute="top" id="OhN-uo-Swh"/>
+                <constraint firstAttribute="trailing" secondItem="AgP-Zw-201" secondAttribute="trailing" id="OsZ-ex-q3U"/>
+                <constraint firstItem="AgP-Zw-201" firstAttribute="leading" secondItem="nD1-hJ-47u" secondAttribute="leading" id="b4r-vR-M1b"/>
+            </constraints>
+            <point key="canvasLocation" x="79.710144927536234" y="31.473214285714285"/>
+        </view>
+    </objects>
+</document>

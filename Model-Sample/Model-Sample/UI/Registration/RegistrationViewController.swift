@@ -41,7 +41,6 @@ class RegistrationViewController: ViewController {
         
         emailTextField.text = registrationInteractor.email
         usernameTextField.text = registrationInteractor.username
-        avatarImageView.roundCornersWithMaximumRadius()
         
         title = "Registration"
         
@@ -53,6 +52,12 @@ class RegistrationViewController: ViewController {
         }
         
         refreshNextButton()
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        avatarImageView.roundCornersWithMaximumRadius()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -85,6 +90,7 @@ class RegistrationViewController: ViewController {
     }
 }
 
+// MARK: - Private
 private extension RegistrationViewController {
     private func refreshNextButton() {
         nextButton.isEnabled = (registrationInteractor.isValidEmail(emailTextField.text ?? "") &&
@@ -100,6 +106,7 @@ extension RegistrationViewController: UIImagePickerControllerDelegate, UINavigat
             avatarImageView.image = image
         }
         dismiss(animated: true, completion: nil)
+        refreshNextButton()
     }
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {

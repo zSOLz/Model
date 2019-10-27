@@ -9,7 +9,6 @@
 import Model
 
 class MainAppAssembly: Assembly {
-    var logoutClosure: () -> Void = {}
     static func makeMainUserCoordinator(with authData: UserAuthData, parent: Coordinator) -> MainUserCoordinator {
         return MainUserCoordinator(with: authData, parent: parent)
     }

@@ -58,6 +58,7 @@ final class UsersInteractor: Interactor {
             
             self?.usersApiManager.userProfile(withId: lastProfileId, completion: { profileResult in
                 profileResult.on(success: { profile in
+                    self?.usersCache.users[profile.id] = profile
                     profiles.append(profile)
                     loadNextProfileOrFinish()
                 }, failure: { error in

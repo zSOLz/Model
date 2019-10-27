@@ -53,7 +53,7 @@ class PasswordViewController: ViewController {
         refreshRegisterButton()
     }
     
-    @IBAction func didTapNRegister(_ sender: Any) {
+    @IBAction func didTapRegister(_ sender: Any) {
         guard isPasswordInputValid else {
             return
         }
@@ -70,6 +70,7 @@ class PasswordViewController: ViewController {
     }
 }
 
+// MARK: - Private
 private extension PasswordViewController {
     private func refreshRegisterButton() {
         regsiterButton.isEnabled = isPasswordInputValid

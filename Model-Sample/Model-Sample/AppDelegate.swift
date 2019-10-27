@@ -11,12 +11,11 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-//    lazy var applicationAssembly = ApplicationAssembly()
-//    lazy var applicationRouter: ApplicationRouter = self.applicationAssembly.applicationRouter()
+    lazy var rootCoordinator = RootAssembly.makeRootCoordinator()
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UIViewController()
+        window?.rootViewController = rootCoordinator.baseViewController
         window?.makeKeyAndVisible()
 
         return true

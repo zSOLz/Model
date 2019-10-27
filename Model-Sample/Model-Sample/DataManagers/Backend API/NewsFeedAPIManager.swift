@@ -19,7 +19,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeed", completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.newsFeed(token: self.token))
         }
     }
@@ -28,7 +28,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeed", completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.feed(profileId: profileId))
         }
     }
@@ -37,13 +37,13 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeedItem", param: ["id": itemId], completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.newsFeedItem(withId: itemId))
         }
     }
     
     func addItem(text: String?, image: UIImage?, completion: @escaping (Result<NewsFeedItem, Error>) -> Void) {
-        guard text != nil || image == nil else {
+        guard text != nil || image != nil else {
             completion(.failure(GenericError.invalidParameters))
             return
         }
@@ -51,7 +51,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "addItem", param: ["text": itemId, "image": imageId], completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(2)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
             completion(Backend.addItem(token: self.token, text: text, image: image))
         }
     }

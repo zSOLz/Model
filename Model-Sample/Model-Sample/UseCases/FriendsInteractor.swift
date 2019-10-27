@@ -30,7 +30,7 @@ class FriendsInteractor {
     }
     
     func friends(forProfileId profileId: UserProfile.Id, completion: @escaping (Result<[UserProfile], Error>) -> Void) {
-        usersApiManager.friends(completion: { [weak self] result in
+        usersApiManager.friends(profileId: profileId, completion: { [weak self] result in
             result.onSuccess { profiles in
                 for profile in profiles {
                     self?.usersCache.users[profile.id] = profile

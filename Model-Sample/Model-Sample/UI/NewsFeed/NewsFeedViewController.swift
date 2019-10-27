@@ -20,6 +20,8 @@ final class NewsFeedViewController: ViewController {
     @IBOutlet var tableView: UITableView!
     
     var openFeedItemClosure: (NewsFeedItem.Id) -> Void = { _ in }
+    var openProfileClosure: (UserProfile.Id) -> Void = { _ in }
+    var newPostClosure: () -> Void = {}
 
     init(newsFeedInteractor: NewsFeedInteractor,
          usersInteractor: UsersInteractor) {
@@ -49,9 +51,20 @@ final class NewsFeedViewController: ViewController {
         
         reloadNewsFeed()
     }
+    
+    @IBAction func didTapAddPhoto(_ sender: Any) {
+        let picker = UIImagePickerController()
+        picker.sourceType = .photoLibrary
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
+    }
+    
+    @IBAction func didTapNewPost(_ sender: Any) {
+        newPostClosure()
+    }
 }
 
-// MARK: - private
+// MARK: - Private
 private extension NewsFeedViewController {
     func reloadNewsFeed() {
         newsFeedInteractor.myNewsFeed(completion: { [weak self] newsFeedResult in
@@ -74,9 +87,10 @@ private extension NewsFeedViewController {
                 return nil
             }
             return NewsFeedItemViewModel(itemId: feedItem.id,
+                                         authorId: profile.id,
                                          authorAvatarURL: profile.avatarURL,
                                          authorName: profile.username,
-                                         date: DateFormatter().string(from: feedItem.date),
+                                         date: DateFormatter.common.string(from: feedItem.date),
                                          text: feedItem.text,
                                          imageURL: feedItem.imageURL)
         }
@@ -93,12 +107,33 @@ extension NewsFeedViewController: UITableViewDataSource, UITableViewDelegate {
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: NewsFeedTableCell.identifier, for: indexPath) as! NewsFeedTableCell
-        cell.setup(viewModel: viewModels[indexPath.row])
+        let viewModel = viewModels[indexPath.row]
+        cell.setup(viewModel: viewModel)
+        cell.tapUserNameClosure = { [weak self] in
+            self?.openProfileClosure(viewModel.authorId)
+        }
         return cell
     }
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         openFeedItemClosure(viewModels[indexPath.row].itemId)
+    }
+}
+
+extension NewsFeedViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = (info[.editedImage] ?? info[.originalImage]) as? UIImage {
+            newsFeedInteractor.addItem(text: nil, image: image, completion: { [weak self] result in
+                result.on(success: { _ in
+                    self?.reloadNewsFeed()
+                }, failure: self?.errorClosure)
+            })
+        }
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
     }
 }
