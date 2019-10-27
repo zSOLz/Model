@@ -9,6 +9,7 @@
 import UIKit
 
 class Backend {
+    static let generalRequestDelay: TimeInterval = 0.5
     private init() {}
     
     static func registerUser(registrationInfo: UserRegistrationData) -> Result<UserAuthData, Error> {
@@ -136,6 +137,30 @@ class Backend {
         }
         return removeFriend(profileId1: userId, profileId2: profileId)
     }
+    
+    static func comments(token: String, feedItemId: NewsFeedItem.Id) -> Result<[FeedItemComment], Error> {
+        guard let _ = tokens[token] else {
+            return .failure(GenericError.notAuthorized)
+        }
+        let comments = feedItemsComments.filter { $0.feedItemId == feedItemId }
+        return .success(comments)
+    }
+    
+    static func addComment(token: String, feedItemId: NewsFeedItem.Id, text: String) -> Result<FeedItemComment, Error> {
+        guard let userId = tokens[token] else {
+            return .failure(GenericError.notAuthorized)
+        }
+        guard let _ = feedItems.first(where: { $0.id == feedItemId }) else {
+            return .failure(GenericError.noResultForParameter)
+        }
+        let comment = FeedItemComment(id: UUID().uuidString,
+                                      feedItemId: feedItemId,
+                                      date: Date(),
+                                      authorId: userId,
+                                      text: text)
+        feedItemsComments.append(comment)
+        return .success(comment)
+    }
 }
 
 // MARK: - Private
@@ -175,22 +200,22 @@ private extension Backend {
         profiles.append(UserProfile(id: "author-1",
                                     username: "John Doe",
                                     email: "john@mail.com",
-                                    avatarURL: nil))
+                                    avatarURL: ImagesDataSource.store(imageName: "avatar-1")))
         
         profiles.append(UserProfile(id: "author-2",
                                     username: "Adam Savage",
                                     email: "adam@mail.com",
-                                    avatarURL: nil))
+                                    avatarURL: ImagesDataSource.store(imageName: "avatar-2")))
         
         profiles.append(UserProfile(id: "author-3",
-                                    username: "Jimi Hendrix",
+                                    username: "Ann Lee",
                                     email: "jimi@mail.com",
-                                    avatarURL: nil))
+                                    avatarURL: ImagesDataSource.store(imageName: "avatar-3")))
         
         profiles.append(UserProfile(id: "author-4",
                                     username: "David Bowee",
                                     email: "david@mail.com",
-                                    avatarURL: nil))
+                                    avatarURL: ImagesDataSource.store(imageName: "avatar-4")))
 
         return profiles
     }()
@@ -226,11 +251,7 @@ private extension Backend {
         feedItems.append(NewsFeedItem(id: "4",
                                       date: Date(timeIntervalSinceNow: -(.day * 10 - .minute * 34)),
                                       authorId: "author-3",
-                                      text: "Pass item ID to router and then build correct controller with correct parameters.\n\n" +
-                                            "See call stack:\nNewsFeedViewController.tableView(_:didSelectRowAt:)\n" +
-                                            "NewsFeedPresenterInterface.articleTapped(at:)\n" +
-                                            "NewsFeedRouter.showArticleDetails(with:)\n" +
-                                            "NewsFeedAssembly.articleDetailsViewController(withArticleId:)",
+                                      text: "Hmm, looks similar, yeah?",
                                       imageURL: ImagesDataSource.store(imageName: "arhitecture-1"),
                                       isLiked: false))
         
@@ -249,5 +270,29 @@ private extension Backend {
                                       isLiked: true))
         
         return feedItems
+    }()
+    
+    static var feedItemsComments: [FeedItemComment] = {
+        var comments = [FeedItemComment]()
+
+        comments.append(FeedItemComment(id: "c-1",
+                                        feedItemId: "1",
+                                        date: Date(timeIntervalSinceNow: -.day),
+                                        authorId: "author-1",
+                                        text: "Seems interesting"))
+
+        comments.append(FeedItemComment(id: "c-2",
+                                        feedItemId: "1",
+                                        date: Date(timeIntervalSinceNow: -(.day * 0.5)),
+                                        authorId: "author-3",
+                                        text: "Really?"))
+
+        comments.append(FeedItemComment(id: "c-3",
+                                        feedItemId: "2",
+                                        date: Date(timeIntervalSinceNow: -(.day * 1)),
+                                        authorId: "author-1",
+                                        text: "LoL!"))
+        
+        return comments
     }()
 }

@@ -8,8 +8,6 @@
 
 import UIKit
 
-private let friendsCellReuseIdentifier = "friendsCellReuseIdentifier"
-
 struct FriendViewModel {
     let profileId: UserProfile.Id
     let avatarURL: URL?
@@ -41,6 +39,9 @@ class FriendsViewController: ViewController {
         super.setupContent()
         
         title = "Friends"
+        
+        tableView.register(UINib(nibName: FriendTableViewCell.identifier, bundle: nil),
+                           forCellReuseIdentifier: FriendTableViewCell.identifier)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -80,16 +81,11 @@ extension FriendsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell: UITableViewCell
-        if let dequedCell = tableView.dequeueReusableCell(withIdentifier: friendsCellReuseIdentifier) {
-            cell = dequedCell
-        } else {
-            cell = UITableViewCell(style: .default, reuseIdentifier: friendsCellReuseIdentifier)
-            cell.accessoryType = .disclosureIndicator
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: FriendTableViewCell.identifier, for: indexPath) as! FriendTableViewCell
         let viewModel = viewModels[indexPath.row]
-        cell.imageView?.image = UIImage(contentsOfFile: viewModel.avatarURL?.path ?? "")
-        cell.textLabel?.text = viewModel.name
+        cell.avatarImageView.loadImage(url: viewModel.avatarURL)
+        cell.avatarImageView.roundCornersWithMaximumRadius()
+        cell.nameLabel?.text = viewModel.name
         return cell
     }
     

@@ -78,9 +78,10 @@ private extension UserProfileViewController {
         usersInteractor.userProfile(withId: profileId, completion: { [weak self] result in
             guard let self = self else { return }
             result.on(success: { profile in
-                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.path ?? "")
+                self.avatarImageView.loadImage(url: profile.avatarURL)
                 self.emailLabel.text = profile.email
                 self.nameLabel.text = profile.username
+                self.title = profile.username
                 
                 self.newsFeedInteractor.feed(profileId: self.profileId, completion: { [weak self] newsFeedResult in
                     newsFeedResult.on(success: { feedItems in
@@ -129,7 +130,7 @@ extension UserProfileViewController: UITableViewDataSource, UITableViewDelegate 
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case friendsSectionIndex: return nil
-        case postsSectionIndex: return "Feed"
+        case postsSectionIndex: return viewModels.isEmpty ? nil : "Feed"
         default: return nil
         }
     }

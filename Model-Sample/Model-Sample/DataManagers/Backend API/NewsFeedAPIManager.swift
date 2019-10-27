@@ -19,7 +19,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeed", completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.newsFeed(token: self.token))
         }
     }
@@ -28,7 +28,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeed", completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.feed(profileId: profileId))
         }
     }
@@ -37,7 +37,7 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "newsFeedItem", param: ["id": itemId], completion: ... )
         
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.newsFeedItem(withId: itemId))
         }
     }
@@ -51,8 +51,20 @@ final class FeedAPIManager {
         // Simulate internet delay
         // httpDataSource.get(endpoint: "addItem", param: ["text": itemId, "image": imageId], completion: ... )
 
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.addItem(token: self.token, text: text, image: image))
+        }
+    }
+    
+    func comments(feedItemId: NewsFeedItem.Id, completion: @escaping(Result<[FeedItemComment], Error>) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
+            completion(Backend.comments(token: self.token, feedItemId: feedItemId))
+        }
+    }
+    
+    func addComments(feedItemId: NewsFeedItem.Id, text: String, completion: @escaping(Result<FeedItemComment, Error>) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
+            completion(Backend.addComment(token: self.token, feedItemId: feedItemId, text: text))
         }
     }
 }

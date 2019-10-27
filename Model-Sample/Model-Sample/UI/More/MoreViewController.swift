@@ -36,7 +36,7 @@ class MoreViewController: ViewController {
     override func setupContent() {
         super.setupContent()
         
-        title = "Friends"
+        title = "More"
         avatarImageView.roundCornersWithMaximumRadius()
     }
     
@@ -53,7 +53,7 @@ private extension MoreViewController {
         usersInteractor.myProfile(completion: { [weak self] result in
             guard let self = self else { return }
             result.on(success: { profile in
-                self.avatarImageView.image = UIImage(contentsOfFile: profile.avatarURL?.path ?? "")
+                self.avatarImageView.loadImage(url: profile.avatarURL)
                 self.nameLabel.text = profile.username
             }, failure: self.errorClosure)
         })

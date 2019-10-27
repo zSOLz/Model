@@ -31,18 +31,18 @@ private extension MainUserCoordinator {
     func setupTabs() {
         let newsFeedCoordinator = NewsFeedAssembly.makeNewsFeedCoordinator(parent: self)
         newsFeedCoordinator.baseViewController.tabBarItem = UITabBarItem(title: "News",
-                                                                         image: nil,
-                                                                         selectedImage: nil) // TODO: images
+                                                                         image: UIImage(systemName: "line.horizontal.3"),
+                                                                         selectedImage: nil)
         
         let friendsCoordinator = ProfileAssembly.makeFriendCoordinator(parent: self)
         friendsCoordinator.baseViewController.tabBarItem = UITabBarItem(title: "Ferinds",
-                                                                        image: nil,
-                                                                        selectedImage: nil) // TODO: images
+                                                                        image: UIImage(systemName: "person.3.fill"),
+                                                                        selectedImage: nil)
         
         let moreCoordinator = ProfileAssembly.makeMoreCoordinator(parent: self)
         moreCoordinator.baseViewController.tabBarItem = UITabBarItem(title: "More",
-                                                                     image: nil,
-                                                                     selectedImage: nil) // TODO: images
+                                                                     image: UIImage(systemName: "ellipsis.circle"),
+                                                                     selectedImage: nil)
         moreCoordinator.logoutClosure = { [weak self] in
             self?.logoutClosure()
         }

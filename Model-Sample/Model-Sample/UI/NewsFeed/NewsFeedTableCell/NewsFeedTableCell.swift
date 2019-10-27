@@ -28,13 +28,9 @@ final class NewsFeedTableCell: UITableViewCell {
     var tapUserNameClosure: () -> Void = {}
 
     func setup(viewModel: NewsFeedItemViewModel) {
-        if let url = viewModel.authorAvatarURL {
-            avatarImageView.image = UIImage(contentsOfFile: url.path)
-        } else {
-            avatarImageView.image = nil
-        }
-        if let contentImageURL = viewModel.imageURL {
-            contentImageView.image = UIImage(contentsOfFile: contentImageURL.path)
+        avatarImageView.loadImage(url: viewModel.authorAvatarURL)
+        contentImageView.loadImage(url: viewModel.imageURL)
+        if viewModel.imageURL != nil {
             contentImageView.isHidden = false
         } else {
             contentImageView.isHidden = true

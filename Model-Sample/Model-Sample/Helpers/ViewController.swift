@@ -26,11 +26,13 @@ class ViewController: UIViewController {
     }
     
     func errorClosure(completion: (() -> Void)? ) -> (Error) -> Void {
-        return { error in
-            // TODO:
+        return { [weak self] error in
+            let alertViewController = UIAlertController()
+            alertViewController.title = "Unexpected error occured"
             let errorString = "\(type(of: error)).\(String(describing: error))"
-            print(errorString)
-            completion?()
+            alertViewController.message = errorString
+            alertViewController.addAction(UIAlertAction(title: "Okay", style: .cancel, handler: nil))
+            self?.present(alertViewController, animated: false, completion: nil)
         }
     }
     

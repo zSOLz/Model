@@ -9,5 +9,6 @@
 import Model
 
 final class NewsFeedCache {
-    var feedItems = [NewsFeedItem.Id: NewsFeedItem]()
+    var feedItems: [NewsFeedItem.Id: NewsFeedItem] = [:]
+    var feedItemComments: [NewsFeedItem.Id: [FeedItemComment]] = [:]
 }

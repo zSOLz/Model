@@ -16,12 +16,18 @@ class FeedItemDetailsViewController: ViewController {
     private let feedItemId: NewsFeedItem.Id
     private let usersInteractor: UsersInteractor
     private let newsFeedInteractor: NewsFeedInteractor
-    
+    private let keyboardObserver = KeyboardHeightObserver()
+
     private var viewModel: NewsFeedItemViewModel?
+    private var commentsViewModels: [FeedItemCommentViewModel] = []
     
     var openProfileClosure: (UserProfile.Id) -> Void = { _ in }
-
+    
     @IBOutlet var tableView: UITableView!
+    @IBOutlet var commentTextView: UITextView!
+    @IBOutlet var sendButton: UIButton!
+    @IBOutlet var placeholderLabel: UILabel!
+    @IBOutlet var keyboardConstraint: NSLayoutConstraint!
 
     init(feedItemId: NewsFeedItem.Id,
          usersInteractor: UsersInteractor,
@@ -36,18 +42,46 @@ class FeedItemDetailsViewController: ViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
         reloadFeedItem()
+        reloadComments(fromCache: true, completion: { [weak self] in
+            self?.reloadComments(fromCache: false)
+        })
     }
     
     override func setupContent() {
         super.setupContent()
         
+        keyboardObserver.heightChangedClosure = { [weak self] height in
+            self?.keyboardConstraint.constant = height
+            UIView.animate(withDuration: .standart) { [weak self] in
+                self?.view.layoutIfNeeded()
+            }
+        }
+        
         tableView.register(UINib(nibName: NewsFeedTableCell.identifier, bundle: nil),
                            forCellReuseIdentifier: NewsFeedTableCell.identifier)
+        tableView.register(UINib(nibName: FeedItemCommentTableViewCell.identifier, bundle: nil),
+                           forCellReuseIdentifier: FeedItemCommentTableViewCell.identifier)
+
+        refreshSendButtonAndPlaceholder()
+    }
+    
+    @IBAction func didTapAddComment() {
+        let text = commentTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !text.isEmpty else {
+            return
+        }
+        newsFeedInteractor.addComment(feedItemId: feedItemId, text: text, completion: { [weak self] result in
+            result.on(success: { _ in
+                self?.commentTextView.text = ""
+                self?.commentTextView.resignFirstResponder()
+                self?.reloadComments(fromCache: true, animateReload: true)
+            }, failure: self?.errorClosure)
+        })
     }
 }
 
@@ -65,6 +99,41 @@ private extension FeedItemDetailsViewController {
         })
     }
     
+    func reloadComments(fromCache: Bool, animateReload: Bool = false, completion: (() -> Void)? = nil) {
+        newsFeedInteractor.comments(useCache: fromCache, feedItemId: feedItemId, completion: { [weak self] result in
+            result.on(success: { comments in
+                let authorIds = Array(Set(comments.map { $0.authorId })) // Get unique user ids
+                self?.usersInteractor.userProfiles(withId: authorIds, completion: { [weak self] usersResult in
+                    usersResult.on(success: { profiles in
+                        self?.reloadComments(comments: comments, profiles: profiles, animateReload: animateReload)
+                    }, failure: self?.errorClosure)
+                })
+            }, failure: self?.errorClosure)
+            completion?()
+        })
+    }
+    
+    func reloadComments(comments: [FeedItemComment], profiles: [UserProfile], animateReload: Bool) {
+        let mappedProfiles = profiles.reduce(into: [UserProfile.Id: UserProfile](), { $0[$1.id] = $1 })
+        let commentsViewModels: [FeedItemCommentViewModel] = comments.compactMap { comment in
+            guard let profile = mappedProfiles[comment.authorId] else {
+                assertionFailure("Unable to find author with id: \(comment.authorId)")
+                return nil
+            }
+            return FeedItemCommentViewModel(authorId: profile.id,
+                                            authorAvatarURL: profile.avatarURL,
+                                            authorName: profile.username,
+                                            date: DateFormatter.common.string(from: comment.date),
+                                            text: comment.text)
+        }
+        self.commentsViewModels = commentsViewModels
+        if animateReload {
+            tableView.reloadSections([commentsSectionIndex], with: .fade)
+        } else {
+            tableView.reloadData()
+        }
+    }
+    
     func reloadFeedItem(feedItem: NewsFeedItem, profile: UserProfile) {
         viewModel = NewsFeedItemViewModel(itemId: feedItem.id,
                                           authorId: profile.id,
@@ -74,6 +143,12 @@ private extension FeedItemDetailsViewController {
                                           text: feedItem.text,
                                           imageURL: feedItem.imageURL)
         tableView.reloadData()
+    }
+    
+    func refreshSendButtonAndPlaceholder() {
+        placeholderLabel.isHidden = !commentTextView.text.isEmpty
+        let text = commentTextView.text.trimmingCharacters(in: .whitespacesAndNewlines)
+        sendButton.isEnabled = !text.isEmpty
     }
 }
 
@@ -88,7 +163,7 @@ extension FeedItemDetailsViewController: UITableViewDataSource, UITableViewDeleg
         case feedItemSectioinIndex:
             return viewModel == nil ? 0 : 1
         case commentsSectionIndex:
-            return 0
+            return commentsViewModels.count
         default: return 0
         }
     }
@@ -96,7 +171,7 @@ extension FeedItemDetailsViewController: UITableViewDataSource, UITableViewDeleg
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch section {
         case feedItemSectioinIndex: return nil
-        case commentsSectionIndex: return "Comments: (TODO)"
+        case commentsSectionIndex: return commentsViewModels.isEmpty ? nil : "Comments"
         default: return nil
         }
     }
@@ -113,7 +188,13 @@ extension FeedItemDetailsViewController: UITableViewDataSource, UITableViewDeleg
             }
             return cell
         case commentsSectionIndex:
-            fatalError("TODO: Comments")
+            let cell = tableView.dequeueReusableCell(withIdentifier: FeedItemCommentTableViewCell.identifier, for: indexPath) as! FeedItemCommentTableViewCell
+            let viewModel = commentsViewModels[indexPath.row]
+            cell.setup(viewModel: viewModel)
+            cell.tapUserNameClosure = { [weak self] in
+                self?.openProfileClosure(viewModel.authorId)
+            }
+            return cell
 
         default:
             fatalError("Unexpected section index: \(indexPath.section)")
@@ -122,5 +203,11 @@ extension FeedItemDetailsViewController: UITableViewDataSource, UITableViewDeleg
     
     public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+}
+
+extension FeedItemDetailsViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        refreshSendButtonAndPlaceholder()
     }
 }

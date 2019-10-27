@@ -28,7 +28,8 @@ final class NewsFeedInteractor: Interactor {
                     self?.newsFeedCache.feedItems[item.id] = item
                 }
             }
-            completion(result)
+            let sortedResult = result.map { $0.sorted { $0.date > $1.date } }
+            completion(sortedResult)
         })
     }
     
@@ -57,6 +58,30 @@ final class NewsFeedInteractor: Interactor {
     func addItem(text: String?, image: UIImage?, completion: @escaping (Result<NewsFeedItem, Error>) -> Void) {
         feedAPIManager.addItem(text: text, image: image, completion: { [weak self] result in
             result.onSuccess { self?.newsFeedCache.feedItems[$0.id] = $0 }
+            completion(result)
+        })
+    }
+    
+    func comments(useCache: Bool, feedItemId: NewsFeedItem.Id, completion: @escaping(Result<[FeedItemComment], Error>) -> Void) {
+        if useCache {
+            let items = newsFeedCache.feedItemComments[feedItemId] ?? []
+            completion(.success(items))
+        } else {
+            feedAPIManager.comments(feedItemId: feedItemId, completion: { [weak self] result in
+                let sortedResult = result.map { $0.sorted(by: { $0.date > $1.date }) }
+                sortedResult.onSuccess { comments in
+                    self?.newsFeedCache.feedItemComments[feedItemId] = comments
+                }
+                completion(sortedResult)
+            })
+        }
+    }
+    
+    func addComment(feedItemId: NewsFeedItem.Id, text: String, completion: @escaping(Result<FeedItemComment, Error>) -> Void) {
+        feedAPIManager.addComments(feedItemId: feedItemId, text: text, completion: { [weak self] result in
+            result.onSuccess { comment in
+                self?.newsFeedCache.feedItemComments[feedItemId, default: []].insert(comment, at: 0)
+            }
             completion(result)
         })
     }

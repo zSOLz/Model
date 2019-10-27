@@ -12,13 +12,13 @@ import UIKit
 final class AuthenticationAPIManager {
     func registerUser(registrationInfo: UserRegistrationData, completion: @escaping (Result<UserAuthData, Error>) -> Void) {
         // Simulate backend access delay
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.registerUser(registrationInfo: registrationInfo))
         }
     }
     
     func login(email: String, password: String, completion: @escaping (Result<UserAuthData, Error>) -> Void) {
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .seconds(1)) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Backend.generalRequestDelay) {
             completion(Backend.loginUser(email: email, password: password))
         }
     }
