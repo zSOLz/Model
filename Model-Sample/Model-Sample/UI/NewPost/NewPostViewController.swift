@@ -62,6 +62,10 @@ private extension NewPostViewController {
     private func refreshDoneButton() {
         doneButton.isEnabled = !messageTextView.text.isEmpty
     }
+
+    private func refreshInteractiveModalInDismissal() {
+        isModalInPresentation = !messageTextView.text.isEmpty
+    }
     
     @objc func didTapDone(_ sender: Any) {
         guard !messageTextView.text.isEmpty else {
@@ -82,5 +86,6 @@ private extension NewPostViewController {
 extension NewPostViewController: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         refreshDoneButton()
+        refreshInteractiveModalInDismissal()
     }
 }
