@@ -149,39 +149,33 @@ extension NavigationCoordinator {
 extension NavigationCoordinator: UIGestureRecognizerDelegate {
     open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
         guard isSwipeBackEnabled else { return false }
-
-        guard let interactiveDismissalHandler = navigationController.topViewController as? InteractiveDismissalHandler else {
-            return true
-        }
-        var isGestureAllowed = false
-        var isPopUncompleted = false
-        interactiveDismissalHandler.handleInteractiveDismissal(.navigationSwipeBack, allow: { [weak self] in
-            if isPopUncompleted {
-                self?.popViewController(animated: true)
-            }
-            isGestureAllowed = true
-        }, deny: {})
-        isPopUncompleted = true
-        return isGestureAllowed
+        return handleIntercativeDismissal(.navigationSwipeBack)
     }
 }
 
 // MARK: - NavigationControllerBackButtonDelegate
 extension NavigationCoordinator: NavigationControllerBackButtonDelegate {
     func navigationControllerShouldPopByBackButton(_ navigationController: UINavigationController) -> Bool {
+        return handleIntercativeDismissal(.navigationBackButton)
+    }
+}
+
+// MARK: - Private
+private extension NavigationCoordinator {
+    func handleIntercativeDismissal(_ interactiveDismissal: InteractiveDismissal) -> Bool {
         guard let interactiveDismissalHandler = navigationController.topViewController as? InteractiveDismissalHandler else {
             return true
         }
 
-        var isButtonPopAllowed = false
+        var isInteractiveDissmissalAllowed = false
         var isPopUncompleted = false
         interactiveDismissalHandler.handleInteractiveDismissal(.navigationBackButton, allow: { [weak self] in
             if isPopUncompleted {
                 self?.popViewController(animated: true)
             }
-            isButtonPopAllowed = true
+            isInteractiveDissmissalAllowed = true
         }, deny: {})
         isPopUncompleted = true
-        return isButtonPopAllowed
+        return isInteractiveDissmissalAllowed
     }
 }
