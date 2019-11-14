@@ -49,18 +49,25 @@ open class NavigationCoordinator: Coordinator, UINavigationControllerDelegate {
     override open var activeViewController: UIViewController? {
         return navigationController.topViewController
     }
+
+    /// Return the value that indicates the possibility to edges swipe back
+    open var isSwipeBackEnabled: Bool {
+        return navigationController.viewControllers.count > 1
+    }
     
     /// Creates the navigation controller that the stack coordinator manages. You should never call this method directly.
     /// The stack coordinator calls method when its navigation controller is never beeng initialized.
     /// The default implementation of this method creates object of *PresentableNavigationController* class and assigns it to *navigationController* property.
     /// Override this method to assign custom navigation controller.
     open func loadNavigationController() {
-        navigationController = UINavigationController()
+        navigationController = NavigationController()
     }
     
     /// Calls after navigation controller was loaded
     open func navigationControllerDidLoad() {
-        // Empty
+        navigationController.delegate = self
+        navigationController.interactivePopGestureRecognizer?.delegate = self
+        (navigationController as? NavigationController)?.backButtonDelegate = self
     }
     
     /// Returns last popped view controller with given type if exists. Otherwise returns nil.
@@ -129,19 +136,52 @@ open class NavigationCoordinator: Coordinator, UINavigationControllerDelegate {
     open func coordinatorIndexAtStack(_ coordinator: Coordinator) -> Int? {
         return navigationController.viewControllers.firstIndex(of: coordinator.baseViewController)
     }
-    
-    open func clearUnusedChildCoordinators() {
-        for coordinator in children {
-            if !navigationController.children.contains(coordinator.baseViewController) &&
-                coordinator != modallyShownCoordinator {
-                coordinator.removeFromParent()
-            }
-        }
-    }
-    
-    // MARK: - UINavigationControllerDelegate
-    
+}
+
+// MARK: - UINavigationControllerDelegate
+extension NavigationCoordinator {
     open func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         clearUnusedChildCoordinators()
+    }
+}
+
+// MARK: - UIGestureRecognizerDelegate
+extension NavigationCoordinator: UIGestureRecognizerDelegate {
+    open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIGestureRecognizer) -> Bool {
+        guard isSwipeBackEnabled else { return false }
+
+        guard let interactiveDismissalHandler = navigationController.topViewController as? InteractiveDismissalHandler else {
+            return true
+        }
+        var isGestureAllowed = false
+        var isPopUncompleted = false
+        interactiveDismissalHandler.handleInteractiveDismissal(.navigationSwipeBack, allow: { [weak self] in
+            if isPopUncompleted {
+                self?.popViewController(animated: true)
+            }
+            isGestureAllowed = true
+        }, deny: {})
+        isPopUncompleted = true
+        return isGestureAllowed
+    }
+}
+
+// MARK: - NavigationControllerBackButtonDelegate
+extension NavigationCoordinator: NavigationControllerBackButtonDelegate {
+    func navigationControllerShouldPopByBackButton(_ navigationController: UINavigationController) -> Bool {
+        guard let interactiveDismissalHandler = navigationController.topViewController as? InteractiveDismissalHandler else {
+            return true
+        }
+
+        var isButtonPopAllowed = false
+        var isPopUncompleted = false
+        interactiveDismissalHandler.handleInteractiveDismissal(.navigationBackButton, allow: { [weak self] in
+            if isPopUncompleted {
+                self?.popViewController(animated: true)
+            }
+            isButtonPopAllowed = true
+        }, deny: {})
+        isPopUncompleted = true
+        return isButtonPopAllowed
     }
 }
