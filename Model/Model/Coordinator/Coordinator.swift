@@ -160,6 +160,7 @@ open class Coordinator: NSObject, Continer {
             break
         }
         presenterViewController.present(controller, animated: animated, completion: completion)
+        clearUnusedChildCoordinators()
     }
     
     /// Dismiss modally presented coordinator also remove this coordinator from child list
@@ -227,10 +228,11 @@ open class Coordinator: NSObject, Continer {
         return coordinator
     }
 
-    /// Returns bool value that allow interactive dismissal for controller
-    /// - parameter controller: controller to allow interactive dismissal
-    open func allowInteractiveDismissal(for controller: UIViewController) -> Bool {
-        return true
+    /// Clear unused children coordinators
+    open func clearUnusedChildCoordinators() {
+        children
+            .filter({ baseViewController.children.contains($0.baseViewController) && $0 != modallyShownCoordinator })
+            .forEach({ $0.removeFromParent() })
     }
 }
 
@@ -253,7 +255,18 @@ extension Coordinator: UIAdaptivePresentationControllerDelegate {
             return false
         }
 
-        return allowInteractiveDismissal(for: modallyShownController ?? presentationController.presentedViewController)
+        guard let interactiveDismissalHandler = (modallyShownController ?? presentationController.presentedViewController) as? InteractiveDismissalHandler else { return true }
+
+        var isGestureAllowed = false
+        var isDismissUncompleted = false
+        interactiveDismissalHandler.handleInteractiveDismissal(.modalInteractiveGesture, allow: { [weak self] in
+            if isDismissUncompleted {
+                self?.dismissModalController()
+            }
+            isGestureAllowed = true
+        }, deny: {})
+        isDismissUncompleted = true
+        return isGestureAllowed
     }
 
     public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
