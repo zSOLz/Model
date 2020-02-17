@@ -149,8 +149,18 @@ open class Coordinator: NSObject, Continer {
         
         modallyShownController = controller
         controller.modalPresentationStyle = presentationStyle
-        let presenterViewController = presentationStyle == .currentContext || presentationStyle == .overCurrentContext ? activeViewController ?? baseViewController : baseViewController
+
+        var presenterViewController = baseViewController
+        switch presentationStyle {
+        case .currentContext, .overCurrentContext:
+            presenterViewController = activeViewController ?? presenterViewController
+        case .pageSheet, .automatic:
+            controller.presentationController?.delegate = self
+        default:
+            break
+        }
         presenterViewController.present(controller, animated: animated, completion: completion)
+        clearUnusedChildCoordinators()
     }
     
     /// Dismiss modally presented coordinator also remove this coordinator from child list
@@ -216,5 +226,58 @@ open class Coordinator: NSObject, Continer {
     open func childCoordinator<CoordinatorType: Coordinator>(withType type: CoordinatorType.Type) -> CoordinatorType? {
         let coordinator = (children.first { $0 is CoordinatorType } as? CoordinatorType)
         return coordinator
+    }
+
+    /// Clear unused children coordinators
+    open func clearUnusedChildCoordinators() {
+        children
+            .filter({ baseViewController.children.contains($0.baseViewController) && $0 != modallyShownCoordinator })
+            .forEach({ $0.removeFromParent() })
+    }
+}
+
+// MARK: - Coordinator+UIAdaptivePresentationControllerDelegate
+extension Coordinator: UIAdaptivePresentationControllerDelegate {
+    public func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        guard modallyShownCoordinator?.modallyShownCoordinator == nil else {
+            assertionFailure("Model.Coordinator.presentationControllerShouldDismiss(_:)\n" +
+                "Attempt to dismiss coordinator witch already has own modal coordinator. Dismiss it first")
+            modallyShownCoordinator?.dismissModalController(animated: true, completion: { [weak self] in
+                self?.dismissModalCoordinator(animated: true, completion: nil)
+            })
+            return false
+        }
+
+        guard modallyShownController != nil
+            && presentationController.presentedViewController === modallyShownController else {
+            assertionFailure("Model.Coordinator.Coordinator.presentationControllerShouldDismiss(_:)\n" +
+                "Unable to adaptive dismiss modal controller: modallyShownController is nil or not contains at presentationController")
+            return false
+        }
+
+        guard let interactiveDismissalHandler = (modallyShownController ?? presentationController.presentedViewController) as? InteractiveDismissalHandler else { return true }
+
+        var isGestureAllowed = false
+        var isDismissUncompleted = false
+        interactiveDismissalHandler.handleInteractiveDismissal(.modalInteractiveGesture, allow: { [weak self] in
+            if isDismissUncompleted {
+                self?.dismissModalController()
+            }
+            isGestureAllowed = true
+        }, deny: {})
+        isDismissUncompleted = true
+        return isGestureAllowed
+    }
+
+    public func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
+        guard presentationController.presentedViewController === modallyShownController else {
+            assertionFailure("Model.Coordinator.Coordinator.presentationControllerDidDismiss(_:)\n" +
+                "Unable to adaptive dismiss modal controller: modallyShownController is not contains at presentationController")
+            return
+        }
+
+        modallyShownCoordinator?.removeFromParent()
+        modallyShownCoordinator = nil
+        modallyShownController = nil
     }
 }

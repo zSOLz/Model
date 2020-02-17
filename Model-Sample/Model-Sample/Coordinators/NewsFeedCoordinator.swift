@@ -37,6 +37,6 @@ private extension NewsFeedCoordinator {
         newPostViewController.closeClosure = { [weak self] in
             self?.dismissModalController()
         }
-        presentModal(controller: navigationController, presentationStyle: .fullScreen)
+        presentModal(controller: navigationController, presentationStyle: .automatic)
     }
 }
