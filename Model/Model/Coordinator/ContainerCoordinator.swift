@@ -74,4 +74,17 @@ open class ContainerCoordinator: Coordinator {
     override open var activeViewController: UIViewController? {
         return containerViewController.contentViewController
     }
+
+    /// Sets new content coordinator with animator
+    /// - parameter newCoordinator: coordinator to set
+    /// - parameter animator: transition animator for setContentViewController func
+    open func setContentCoordinator(_ newCoordinator: Coordinator?, animator: UIViewControllerAnimatedTransitioning? = nil) {
+        if let coordinator = contentCoordinator {
+            coordinator.removeFromParent()
+        }
+        if let coordinator = newCoordinator {
+            add(child: coordinator)
+        }
+        containerViewController.setContentViewController(newCoordinator?.baseViewController, animator: animator)
+    }
 }
