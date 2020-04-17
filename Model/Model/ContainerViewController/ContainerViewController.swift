@@ -45,6 +45,10 @@ open class ContainerViewController: UIViewController {
         return contentViewController
     }
 
+    open override var childForHomeIndicatorAutoHidden: UIViewController? {
+        return contentViewController
+    }
+
     /// Method creates and returns default transition context to implement animation between old and new content view controller.
     /// Override it to use your custom transition context. It wouldn't be deallocated until animation has ended.
     /// - parameter containerView: will be a container view for future animation
