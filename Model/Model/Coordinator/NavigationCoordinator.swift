@@ -169,7 +169,7 @@ private extension NavigationCoordinator {
 
         var isInteractiveDissmissalAllowed = false
         var isPopUncompleted = false
-        interactiveDismissalHandler.handleInteractiveDismissal(.navigationBackButton, allow: { [weak self] in
+        interactiveDismissalHandler.handleInteractiveDismissal(interactiveDismissal, allow: { [weak self] in
             if isPopUncompleted {
                 self?.popViewController(animated: true)
             }
